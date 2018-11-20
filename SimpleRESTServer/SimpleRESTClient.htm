@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+<meta charset="utf-8">
+<title>Simple REST Client</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script>
+
+$(document).ready(function(){
+    $("button").click(function(){
+
+	var url = $("#server").val() +
+		"?action=transfer" +
+		"&srccard=" + $("#srccard").val() +
+		"&srcphone=" + $("#srcphone").val() +
+		"&dstcard=" + $("#dstcard").val() +
+		"&dstphone=" + $("#dstphone").val() +
+		"&sum=" + $("#sum").val() +
+		"&msg=" + $("#msg").val();
+
+	$.ajax({
+		url: url,
+		success:function(json){
+			//if (json.error == 0)
+				$("#result").val(json.result);
+			//else
+			//	$("#result").val("Error");
+		},
+		error:function(){
+			$("#result").val("Connection error");
+		}
+	});
+
+    });
+});
+</script>
+
+</head>
+
+<body>
+
+<h1>Bank Online</h1>
+
+<span><b>Web service: </b></span>
+<br/>
+<input type="text" id="server" value="http://localhost:8080/rest" />
+<br/>
+<br/>
+
+<span><b>Input your card number or phone number:</b><br/>(card number have priority)</span>
+<br/>
+<br/>
+Card number:<br/>
+<input type="text" id="srccard" value="" size="50" />
+<br/>
+Phone number:<br/>
+<input type="text" id="srcphone" value="" size="50" />
+<br/>
+<br/>
+<span><b>Input card number or phone number of recipient:</b><br/>(card number have priority)</span>
+<br/>
+<br/>
+Card number:<br/>
+<input type="text" id="dstcard" value="" size="50" />
+<br/>
+Phone number:<br/>
+<input type="text" id="dstphone" value="" size="50" />
+<br/>
+<br/>
+<span><b>Input sum to transfer:</b></span>
+<br/>
+<input type="text" id="sum" value="0" />
+<br/>
+<br/>
+<span><b>Input message to recipient (optional):</b></span>
+<br/>
+<textarea id="msg" cols="40" rows="5"></textarea>
+<br/>
+
+<button>Submit</button>
+<br/>
+<br/>
+
+<span><b>Result: </b></span>
+<br/>
+
+<textarea id="result" cols="40" rows="5"></textarea>
+
+</body>
+</html>
+
